@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "946837201125",
+    "project_id": "democicdtest-881d5",
+    "storage_bucket": "democicdtest-881d5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:946837201125:android:56314f5db486b54f0f340c",
+        "android_client_info": {
+          "package_name": "com.qntm.cicddemotest"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJ8B2CCSg0glDqbAfZEM6npm73_y0tx68"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
