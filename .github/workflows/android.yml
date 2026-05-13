@@ -23,20 +23,35 @@ jobs:
       - name: Grant Permission
         run: chmod +x gradlew
 
+      - name: Decode Keystore
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" > keystore.base64
+          base64 --decode keystore.base64 > app/release-key.jks
+
+      - name: Create Keystore Properties
+        run: |
+          echo "storePassword=${{ secrets.STORE_PASSWORD }}" >> keystore.properties
+          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> keystore.properties
+          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> keystore.properties
+          echo "storeFile=app/release-key.jks" >> keystore.properties
+
       - name: Run Unit Tests
         run: ./gradlew test
 
       - name: Run Android Lint
         run: ./gradlew lint
 
-      - name: Build APK
-        run: ./gradlew assembleDebug
+      - name: Increment Version Code
+        run: ./gradlew incrementVersionCode
 
-      - name: Upload APK
+      - name: Build Release APK
+        run: ./gradlew assembleRelease
+
+      - name: Upload Release APK
         uses: actions/upload-artifact@v4
         with:
-          name: app-debug
-          path: app/build/outputs/apk/debug/app-debug.apk
+          name: app-release
+          path: app/build/outputs/apk/release/app-release.apk
 
       - name: Upload APK to Firebase
         uses: wzieba/Firebase-Distribution-Github-Action@v1
@@ -44,4 +59,4 @@ jobs:
           appId: ${{ secrets.FIREBASE_APP_ID }}
           token: ${{ secrets.FIREBASE_TOKEN }}
           groups: Android_Tester
-          file: app/build/outputs/apk/debug/app-debug.apk
+          file: app/build/outputs/apk/release/app-release.apk
