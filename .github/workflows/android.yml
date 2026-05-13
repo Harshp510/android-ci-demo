@@ -25,6 +25,7 @@ jobs:
 
       - name: Decode Keystore
         run: |
+          mkdir -p app/keystore
           echo "${{ secrets.KEYSTORE_BASE64 }}" > keystore.base64
           base64 --decode keystore.base64 > app/keystore/release-key.jks
 
